@@ -51,4 +51,8 @@ public class Keys implements KeyListener{
             rightPressed = false;
         }
     }
+
+    public boolean isMovePressed(){
+        return upPressed || downPressed || leftPressed || rightPressed;
+    }
 }

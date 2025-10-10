@@ -5,11 +5,12 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import com.entity.Player;
 
 public class Gpanel extends JPanel  implements Runnable{
     final int frameOriginalSize = 16;
     final int scale = 3;
-    final int frameActualSize = frameOriginalSize*scale;
+    public final int frameActualSize = frameOriginalSize*scale;
     final int columns = 32;
     final int rows = 18;
     final int screenWidth = frameActualSize*columns; //1536px
@@ -18,6 +19,8 @@ public class Gpanel extends JPanel  implements Runnable{
 
     Thread gThread; //it's the clock of the game
     Keys keys = new Keys();
+
+    Player player = new Player(this, keys);
 
     int playerX = 100;
     int playerY = 100;
@@ -61,23 +64,16 @@ public class Gpanel extends JPanel  implements Runnable{
     }
 
     public void updateData(){
-        if(keys.upPressed == true){
-            playerY -= playerSpeed;
-        } else if(keys.downPressed == true){
-            playerY += playerSpeed;
-        } else if(keys.leftPressed == true){
-            playerX -= playerSpeed;
-        } else if(keys.rightPressed == true){
-            playerX += playerSpeed;
-        }
+        player.update();
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.cyan);
-        g2d.fillRect(playerX,playerY,frameActualSize, frameActualSize);
+        
+        player.paint(g2d);
+
         g2d.dispose();
     }
 }
