@@ -6,25 +6,23 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import com.entity.Player;
+import com.tile.TileManager;
 
 public class Gpanel extends JPanel  implements Runnable{
     final int frameOriginalSize = 16;
     final int scale = 3;
     public final int frameActualSize = frameOriginalSize*scale;
-    final int columns = 32;
-    final int rows = 18;
-    final int screenWidth = frameActualSize*columns; //1536px
-    final int screenHeight = frameActualSize*rows;  //864px
+    public final int columns = 28;
+    public final int rows = 14;
+    final int screenWidth = frameActualSize*columns; //1344px
+    final int screenHeight = frameActualSize*rows;  //672px
     final int fps = 60;
 
     Thread gThread; //it's the clock of the game
     Keys keys = new Keys();
+    TileManager tileManager = new TileManager(this);
 
     Player player = new Player(this, keys);
-
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 5;
 
     public Gpanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -72,6 +70,7 @@ public class Gpanel extends JPanel  implements Runnable{
 
         Graphics2D g2d = (Graphics2D) g;
         
+        tileManager.draw(g2d);
         player.paint(g2d);
 
         g2d.dispose();
