@@ -10,11 +10,18 @@ public class Player extends Entity {
     Gpanel gp;
     Keys keys;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(Gpanel gp, Keys keys){
         this.gp = gp;
         this.keys = keys;
-        x = 100;
-        y = 100;
+        worldX = gp.frameActualSize*10;
+        worldY = gp.frameActualSize*10;
+        
+        screenX = gp.screenWidth/2 - (gp.frameActualSize/2);
+        screenY = gp.screenHeight/2 - (gp.frameActualSize/2);
+        
         speed = 5;
 
         getImage();
@@ -26,19 +33,19 @@ public class Player extends Entity {
 
             if(keys.upPressed == true){
                 direction = 'w';
-                y -= speed;
+                worldY -= speed;
             }
             else if(keys.downPressed == true){
                 direction = 's';
-                y += speed;
+                worldY += speed;
             }
             else if(keys.leftPressed == true){
                 direction = 'a';
-                x -= speed;
+                worldX -= speed;
             }
             else if(keys.rightPressed == true){
                 direction = 'd';
-                x += speed;
+                worldX += speed;
             }
             spriteCounter++;
             if(spriteCounter > 13){
@@ -104,6 +111,6 @@ public class Player extends Entity {
                 break;
         }
 
-        g2d.drawImage(image, x, y, gp.frameActualSize, gp.frameActualSize, null);
+        g2d.drawImage(image, screenX, screenY, gp.frameActualSize, gp.frameActualSize, null);
     }
 }

@@ -16,10 +16,10 @@ public class TileManager {
     public TileManager(Gpanel gp){
         this.gp = gp;
         tiles = new Tile[10]; //types of tiles, to be changed
-        mapTileNum = new int[gp.columns][gp.rows];
+        mapTileNum = new int[gp.worldColumns][gp.worldRows];
 
         getTileImage();
-        loadMap("/maps/blank.txt");
+        loadMap("/maps/50x50_1.txt");
     }
 
     public void getTileImage(){
@@ -34,6 +34,15 @@ public class TileManager {
             tiles[2] = new Tile();
             tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/floors/water1.png"));
 
+            tiles[3] = new Tile();
+            tiles[3].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/objects/tree1.png"));
+
+            tiles[4] = new Tile();
+            tiles[4].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/floors/dirt.png"));
+
+            tiles[5] = new Tile();
+            tiles[5].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/floors/sand1.png"));
+
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -47,16 +56,16 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while(col < gp.columns && row < gp.rows){
+            while(col < gp.worldColumns && row < gp.worldRows){
                 String line = br.readLine();
 
-                while(col < gp.columns){
+                while(col < gp.worldColumns){
                     String numbers[] = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = num;
                     col++;
                 }
-                if(col == gp.columns){
+                if(col == gp.worldColumns){
                     col = 0;
                     row++;
                 }
@@ -72,23 +81,33 @@ public class TileManager {
 
         int col = 0;
         int row = 0;
-        int x = 0;
-        int y = 0;
 
-        while(col < gp.columns && row < gp.rows){
+        while(col < gp.worldColumns && row < gp.worldRows){
 
             int tileNum = mapTileNum[col][row];
 
-            g2d.drawImage(tiles[tileNum].image, x, y, gp.frameActualSize, gp.frameActualSize, null);
-            col++;
-            x += gp.frameActualSize;
+            int worldX = col * gp.frameActualSize;
+            int worldY = row * gp.frameActualSize;
+            int screenX = worldX - gp.player.worldX + gp.player.screenX;
+            int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            if(col == gp.columns){
+            if(pixelFits(worldX, worldY)){
+                g2d.drawImage(tiles[tileNum].image, screenX, screenY, gp.frameActualSize, gp.frameActualSize, null);  
+            }
+            col++;
+
+            if(col == gp.worldColumns){
                 col = 0;
-                x = 0;
                 row++;
-                y += gp.frameActualSize;
             }
         }
     }
+
+    private boolean pixelFits(int x, int y){
+        return x + gp.frameActualSize > gp.player.worldX - gp.player.screenX &&
+               x - gp.frameActualSize < gp.player.worldX + gp.player.screenX &&
+               y + gp.frameActualSize > gp.player.worldY - gp.player.screenY &&
+               y - gp.frameActualSize < gp.player.worldY + gp.player.screenY;
+    }
+
 }

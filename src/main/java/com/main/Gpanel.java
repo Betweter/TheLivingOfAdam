@@ -9,20 +9,28 @@ import com.entity.Player;
 import com.tile.TileManager;
 
 public class Gpanel extends JPanel  implements Runnable{
+    
+    //screen
     final int frameOriginalSize = 16;
     final int scale = 3;
     public final int frameActualSize = frameOriginalSize*scale;
     public final int columns = 28;
     public final int rows = 14;
-    final int screenWidth = frameActualSize*columns; //1344px
-    final int screenHeight = frameActualSize*rows;  //672px
+    public final int screenWidth = frameActualSize*columns; //1344px
+    public final int screenHeight = frameActualSize*rows;  //672px
     final int fps = 60;
+
+    //world
+    public final int worldColumns = 50;
+    public final int worldRows = 50;
+    public final int worldWidth = frameActualSize*worldColumns;
+    public final int worldHeight = frameActualSize*worldRows;
 
     Thread gThread; //it's the clock of the game
     Keys keys = new Keys();
     TileManager tileManager = new TileManager(this);
 
-    Player player = new Player(this, keys);
+    public Player player = new Player(this, keys);
 
     public Gpanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
