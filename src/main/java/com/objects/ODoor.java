@@ -4,8 +4,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.main.Gpanel;
+
 public class ODoor extends SuperObject {
-        public ODoor(){
+        
+    public ODoor(Gpanel gp){
         name = "Door";
 
         try{

@@ -2,7 +2,7 @@ package com.entity;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 
-public class Entity {
+public abstract class Entity {
     public int worldX, worldY;
     public int speed;
 

@@ -3,8 +3,11 @@ package com.objects;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import com.main.Gpanel;
+
 public class OChest extends SuperObject {
-        public OChest(){
+        
+    public OChest(Gpanel gp){
         name = "Chest";
 
         try{

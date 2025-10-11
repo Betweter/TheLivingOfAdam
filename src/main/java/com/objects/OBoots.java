@@ -4,8 +4,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.main.Gpanel;
+
 public class OBoots extends SuperObject {
-    public OBoots(){
+    
+    public OBoots(Gpanel gp){
         name = "Boots";
 
         try{

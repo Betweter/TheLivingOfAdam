@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import com.main.Gpanel;
 
-public class SuperObject {
+public abstract class SuperObject {
     
     public BufferedImage image;
     public String name;

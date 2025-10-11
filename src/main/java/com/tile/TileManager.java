@@ -1,11 +1,13 @@
 package com.tile;
 
 import com.main.Gpanel;
+import com.main.Utility;
+
 import javax.imageio.ImageIO;
-import java.io.IOException;
 import java.awt.Graphics2D;
 import java.io.InputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class TileManager {
@@ -24,31 +26,22 @@ public class TileManager {
 
     public void getTileImage(){
         
+        setup(0, "/graphics/tiles/floors/grass.png", false);
+        setup(1, "/graphics/tiles/floors/prp_bricks.png", true);
+        setup(2, "/graphics/tiles/floors/water1.png", true);
+        setup(3, "/graphics/tiles/objects/tree1.png", true);
+        setup(4, "/graphics/tiles/floors/dirt.png", false);
+        setup(5, "/graphics/tiles/floors/sand1.png", false);
+
+    }
+
+    private void setup(int index, String path, boolean collision){
+
         try{
-            tiles[0] = new Tile();
-            tiles[0].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/floors/grass.png"));
-
-            tiles[1] = new Tile();
-            tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/floors/prp_bricks.png"));
-            tiles[1].collision = true;
-
-            tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/floors/water1.png"));
-            tiles[2].collision = true;
-
-            tiles[3] = new Tile();
-            tiles[3].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/objects/tree1.png"));
-            tiles[3].collision = true;
-
-            tiles[4] = new Tile();
-            tiles[4].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/floors/dirt.png"));
-
-            tiles[5] = new Tile();
-            tiles[5].image = ImageIO.read(getClass().getResourceAsStream("/graphics/tiles/floors/sand1.png"));
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+            tiles[index] = new Tile();
+            tiles[index].image = ImageIO.read(getClass().getResourceAsStream(path));
+            tiles[index].image = Utility.scaledImage(tiles[index].image, gp.frameActualSize, gp.frameActualSize);
+        } catch (IOException e) {e.printStackTrace();}
     }
 
     public void loadMap(String filePath){
@@ -95,7 +88,7 @@ public class TileManager {
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
             if(pixelFits(worldX, worldY)){
-                g2d.drawImage(tiles[tileNum].image, screenX, screenY, gp.frameActualSize, gp.frameActualSize, null);  
+                g2d.drawImage(tiles[tileNum].image, screenX, screenY, null);  
             }
             col++;
 

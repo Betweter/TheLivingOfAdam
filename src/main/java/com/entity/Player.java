@@ -1,6 +1,8 @@
 package com.entity;
 import com.main.Gpanel;
 import com.main.Keys;
+import com.main.Utility;
+
 import java.awt.Graphics2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -78,17 +80,24 @@ public class Player extends Entity {
     }
 
     public void getImage(){
+        w1 = setup("/graphics/player/w1.png");
+        w2 = setup("/graphics/player/w2.png");
+        s1 = setup("/graphics/player/s1.png");
+        s2 = setup("/graphics/player/s2.png");
+        d1 = setup("/graphics/player/d1.png");
+        d2 = setup("/graphics/player/d2.png");
+        s1 = setup("/graphics/player/a1.png");
+        s2 = setup("/graphics/player/a2.png");
+    }
+    
+    private BufferedImage setup(String path){
+        BufferedImage scaledImage = null;
         try{
-            w1 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/w1.png"));
-            w2 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/w2.png"));
-            s1 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/s1.png"));
-            s2 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/s2.png"));
-            d1 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/d1.png"));
-            d2 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/d2.png"));
-            a1 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/a1.png"));
-            a2 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/a2.png"));
+            scaledImage = ImageIO.read(getClass().getResourceAsStream(path));
+            scaledImage = Utility.scaledImage(scaledImage, gp.frameActualSize, gp.frameActualSize);
+        } catch (IOException e) {e.printStackTrace();}
 
-        } catch (IOException e){ e.printStackTrace(); }
+        return scaledImage;
     }
 
     public void paint(Graphics2D g2d){
@@ -126,7 +135,7 @@ public class Player extends Entity {
                 break;
         }
 
-        g2d.drawImage(image, screenX, screenY, gp.frameActualSize, gp.frameActualSize, null);
+        g2d.drawImage(image, screenX, screenY, null);
     }
 
     public void pickUpObject(int i){

@@ -27,7 +27,7 @@ public class UserInterface {
         this.gp = gp;
         comicsans = new Font("Comic Sans MS", Font.PLAIN, 40);
         bigsans = new Font("Comic Sans MS", Font.BOLD, 70);
-        OKey key = new OKey();
+        OKey key = new OKey(gp);
         keymage = key.image;
     }
 
