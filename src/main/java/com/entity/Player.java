@@ -14,7 +14,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    int hasKeys = 0;
+    public int hasKeys = 0;
 
     public Player(Gpanel gp, Keys keys){
         this.gp = gp;
@@ -138,19 +138,26 @@ public class Player extends Entity {
                     hasKeys++;
                     gp.obj[i] = null;
                     gp.playEffect(1);
-                    System.out.println("Nr of keys: " + hasKeys);
+                    gp.ui.showMessage("You've found a giraffe!");
                     break;
                 case "Door":
                     if(hasKeys > 0){
                         hasKeys--;
                         gp.playEffect(3);
                         gp.obj[i] = null;
+                    } else {
+                        gp.ui.showMessage("Find a giraffe, she'll help you!");
                     }
                     break;
                 case "Boots":
                     speed += 2;
                     gp.playEffect(2);
                     gp.obj[i] = null;
+                    break;
+                case "Chest":
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    gp.playEffect(4);
                     break;
             }
         }

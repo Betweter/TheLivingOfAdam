@@ -28,10 +28,13 @@ public class Gpanel extends JPanel  implements Runnable{
     public Collision collisionCheck = new Collision(this);
     public AssetSetter aSetter = new AssetSetter(this);
 
+    //systems
     Thread gThread; //it's the clock of the game
     Keys keys = new Keys();
     public TileManager tileManager = new TileManager(this);
+    Sound music = new Sound();
     Sound sound = new Sound();
+    public UserInterface ui = new UserInterface(this);
 
     public Player player = new Player(this, keys);
     public SuperObject obj[] = new SuperObject[10]; //to be adjusted
@@ -92,6 +95,8 @@ public class Gpanel extends JPanel  implements Runnable{
 
         player.paint(g2d);
 
+        ui.draw(g2d);
+
         g2d.dispose();
     }
 
@@ -102,13 +107,13 @@ public class Gpanel extends JPanel  implements Runnable{
 
     public void playMusic(int i){
 
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
+        music.setFile(i);
+        music.play();
+        music.loop();
     }
 
     public void stopMusic(){
-        sound.stop();
+        music.stop();
     }
 
     public void playEffect(int i){
