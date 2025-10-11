@@ -25,6 +25,7 @@ public class Gpanel extends JPanel  implements Runnable{
     public final int worldRows = 50;
     public final int worldWidth = frameActualSize*worldColumns;
     public final int worldHeight = frameActualSize*worldRows;
+    public Collision collisionCheck = new Collision(this);
 
     Thread gThread; //it's the clock of the game
     Keys keys = new Keys();

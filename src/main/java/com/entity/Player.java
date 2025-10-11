@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
 public class Player extends Entity {
     Gpanel gp;
@@ -21,7 +22,9 @@ public class Player extends Entity {
         
         screenX = gp.screenWidth/2 - (gp.frameActualSize/2);
         screenY = gp.screenHeight/2 - (gp.frameActualSize/2);
-        
+       
+        int chunk = gp.frameActualSize/6;
+        collisionArea = new Rectangle(chunk*2, chunk*3, chunk*2, chunk*2);
         speed = 5;
 
         getImage();
@@ -33,20 +36,28 @@ public class Player extends Entity {
 
             if(keys.upPressed == true){
                 direction = 'w';
-                worldY -= speed;
             }
             else if(keys.downPressed == true){
                 direction = 's';
-                worldY += speed;
             }
             else if(keys.leftPressed == true){
                 direction = 'a';
-                worldX -= speed;
             }
             else if(keys.rightPressed == true){
                 direction = 'd';
-                worldX += speed;
             }
+
+            collision = false;
+            gp.collisionCheck.checkTile(this);
+            if (collision == false){
+                switch(direction){
+                    case 'w': worldY -= speed; break;
+                    case 's': worldY += speed; break;
+                    case 'a': worldX -= speed; break;
+                    case 'd': worldX += speed; break;
+                }
+            }
+
             spriteCounter++;
             if(spriteCounter > 13){
                 if (spriteNr == 1){
