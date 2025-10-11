@@ -15,6 +15,7 @@ public class Main{
         window.setLocationRelativeTo(null);  //center
         window.setVisible(true);
 
-       gpanel.startGThread();
+        gpanel.setupGame();        
+        gpanel.startGThread();
     }
 }

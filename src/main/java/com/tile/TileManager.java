@@ -106,7 +106,7 @@ public class TileManager {
         }
     }
 
-    private boolean pixelFits(int x, int y){
+    public boolean pixelFits(int x, int y){
         return x + gp.frameActualSize > gp.player.worldX - gp.player.screenX &&
                x - gp.frameActualSize < gp.player.worldX + gp.player.screenX &&
                y + gp.frameActualSize > gp.player.worldY - gp.player.screenY &&

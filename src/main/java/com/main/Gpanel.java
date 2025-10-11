@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import com.entity.Player;
 import com.tile.TileManager;
+import com.objects.SuperObject;
 
 public class Gpanel extends JPanel  implements Runnable{
     
@@ -26,12 +27,14 @@ public class Gpanel extends JPanel  implements Runnable{
     public final int worldWidth = frameActualSize*worldColumns;
     public final int worldHeight = frameActualSize*worldRows;
     public Collision collisionCheck = new Collision(this);
+    public AssetSetter aSetter = new AssetSetter(this);
 
     Thread gThread; //it's the clock of the game
     Keys keys = new Keys();
-    TileManager tileManager = new TileManager(this);
+    public TileManager tileManager = new TileManager(this);
 
     public Player player = new Player(this, keys);
+    public SuperObject obj[] = new SuperObject[10]; //to be adjusted
 
     public Gpanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -80,8 +83,19 @@ public class Gpanel extends JPanel  implements Runnable{
         Graphics2D g2d = (Graphics2D) g;
         
         tileManager.draw(g2d);
+
+        for(int i=0; i<obj.length; i++){
+            if(obj[i] != null){
+                obj[i].draw(g2d, this);
+            }
+        }
+
         player.paint(g2d);
 
         g2d.dispose();
+    }
+
+    public void setupGame(){
+        aSetter.set();
     }
 }
