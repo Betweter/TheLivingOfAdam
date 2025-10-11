@@ -57,4 +57,72 @@ public class Collision {
                 }
         }
     }
+
+    public int checkObject(Entity entity, boolean player){
+        int index = 999;
+        for(int i=0; i<gp.obj.length; i++){
+            if(gp.obj[i] != null){
+
+                entity.collisionArea.x = entity.worldX + entity.collisionArea.x;
+                entity.collisionArea.y = entity.worldY + entity.collisionArea.y;
+
+                gp.obj[i].collisionArea.x = gp.obj[i].worldX + gp.obj[i].collisionArea.x;
+                gp.obj[i].collisionArea.y = gp.obj[i].worldY + gp.obj[i].collisionArea.y;
+
+                switch(entity.direction){
+                    case 'w':
+                        entity.collisionArea.y -= entity.speed;
+                        if(entity.collisionArea.intersects(gp.obj[i].collisionArea)){
+                            if(gp.obj[i].collision){
+                                entity.collision = true;
+                            }
+                            if(player){
+                                index = i;
+                            }
+                        }
+                        break;
+                    case 's':
+                        entity.collisionArea.y += entity.speed;
+                        if(entity.collisionArea.intersects(gp.obj[i].collisionArea)){
+                            if(gp.obj[i].collision){
+                                entity.collision = true;
+                            }
+                            if(player){
+                                index = i;
+                            }
+                        }
+                        break;
+                    case 'a':
+                        entity.collisionArea.x -= entity.speed;
+                        if(entity.collisionArea.intersects(gp.obj[i].collisionArea)){
+                            if(gp.obj[i].collision){
+                                entity.collision = true;
+                            }
+                            if(player){
+                                index = i;
+                            }
+                        }
+                        break;
+                    case 'd':
+                        entity.collisionArea.x += entity.speed;
+                        if(entity.collisionArea.intersects(gp.obj[i].collisionArea)){
+                            if(gp.obj[i].collision){
+                                entity.collision = true;
+                            }
+                            if(player){
+                                index = i;
+                            }
+                        }
+                }
+
+                entity.collisionArea.x = entity.collisionAreaXDefault;
+                entity.collisionArea.y =  entity.collisionAreaYDefault;
+                gp.obj[i].collisionArea.x = gp.obj[i].collisionAreaXDefault;
+                gp.obj[i].collisionArea.y = gp.obj[i].collisonAreaYDefault;
+            }
+        }
+
+
+        return index;
+    }
 }

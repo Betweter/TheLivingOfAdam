@@ -1,6 +1,7 @@
 package com.objects;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import com.main.Gpanel;
 
 public class SuperObject {
@@ -9,6 +10,9 @@ public class SuperObject {
     public String name;
     public boolean collision = false;
     public int worldX, worldY;
+    public Rectangle collisionArea = new Rectangle(0,0, 48, 48); //frame size, to be generalized
+    public int collisionAreaXDefault = 0;
+    public int collisonAreaYDefault = 0;
 
     public void draw(Graphics2D g2d, Gpanel gp){
 

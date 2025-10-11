@@ -14,6 +14,8 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    int hasKeys = 0;
+
     public Player(Gpanel gp, Keys keys){
         this.gp = gp;
         this.keys = keys;
@@ -24,7 +26,9 @@ public class Player extends Entity {
         screenY = gp.screenHeight/2 - (gp.frameActualSize/2);
        
         int chunk = gp.frameActualSize/6;
-        collisionArea = new Rectangle(chunk*2, chunk*3, chunk*2, chunk*2);
+        collisionAreaXDefault = chunk*2;
+        collisionAreaYDefault = chunk*3;
+        collisionArea = new Rectangle(collisionAreaXDefault, collisionAreaYDefault, chunk*2, chunk*2);
         speed = 5;
 
         getImage();
@@ -49,6 +53,9 @@ public class Player extends Entity {
 
             collision = false;
             gp.collisionCheck.checkTile(this);
+            int objectIndex = gp.collisionCheck.checkObject(this, true);
+            pickUpObject(objectIndex);
+            
             if (collision == false){
                 switch(direction){
                     case 'w': worldY -= speed; break;
@@ -81,9 +88,7 @@ public class Player extends Entity {
             a1 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/a1.png"));
             a2 = ImageIO.read(getClass().getResourceAsStream("/graphics/player/a2.png"));
 
-        } catch (IOException e){
-            e.printStackTrace(); //error message to terminal
-        }
+        } catch (IOException e){ e.printStackTrace(); }
     }
 
     public void paint(Graphics2D g2d){
@@ -91,13 +96,12 @@ public class Player extends Entity {
         BufferedImage image = null;
 
         switch(direction){
-            case 'w':
+            case 'w':    
                 if (spriteNr == 1){
                     image = w1;
                 } else if (spriteNr == 2){
                     image = w2;
                 }
-                image = w1;
                 break;
             case 's':
                 if (spriteNr == 1){
@@ -123,5 +127,25 @@ public class Player extends Entity {
         }
 
         g2d.drawImage(image, screenX, screenY, gp.frameActualSize, gp.frameActualSize, null);
+    }
+
+    public void pickUpObject(int i){
+        if(i != 999){
+            String oName = gp.obj[i].name;
+
+            switch(oName){
+                case "Key":
+                    hasKeys++;
+                    gp.obj[i] = null;
+                    System.out.println("Nr of keys: " + hasKeys);
+                    break;
+                case "Door":
+                    if(hasKeys > 0){
+                        hasKeys--;
+                        gp.obj[i] = null;
+                    }
+                    break;
+            }
+        }
     }
 }
