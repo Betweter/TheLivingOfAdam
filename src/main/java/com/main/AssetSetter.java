@@ -29,6 +29,10 @@ public class AssetSetter {
         gp.obj[4] = new OChest();
         gp.obj[4].worldX = gp.frameActualSize*32;
         gp.obj[4].worldY = gp.frameActualSize*11;
+        
+        gp.obj[5] = new OBoots();
+        gp.obj[5].worldX = gp.frameActualSize*42;
+        gp.obj[5].worldY = gp.frameActualSize*38;
     }
     
 }

@@ -137,13 +137,20 @@ public class Player extends Entity {
                 case "Key":
                     hasKeys++;
                     gp.obj[i] = null;
+                    gp.playEffect(1);
                     System.out.println("Nr of keys: " + hasKeys);
                     break;
                 case "Door":
                     if(hasKeys > 0){
                         hasKeys--;
+                        gp.playEffect(3);
                         gp.obj[i] = null;
                     }
+                    break;
+                case "Boots":
+                    speed += 2;
+                    gp.playEffect(2);
+                    gp.obj[i] = null;
                     break;
             }
         }

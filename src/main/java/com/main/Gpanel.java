@@ -24,14 +24,14 @@ public class Gpanel extends JPanel  implements Runnable{
     //world
     public final int worldColumns = 50;
     public final int worldRows = 50;
-    public final int worldWidth = frameActualSize*worldColumns;
-    public final int worldHeight = frameActualSize*worldRows;
+
     public Collision collisionCheck = new Collision(this);
     public AssetSetter aSetter = new AssetSetter(this);
 
     Thread gThread; //it's the clock of the game
     Keys keys = new Keys();
     public TileManager tileManager = new TileManager(this);
+    Sound sound = new Sound();
 
     public Player player = new Player(this, keys);
     public SuperObject obj[] = new SuperObject[10]; //to be adjusted
@@ -97,5 +97,22 @@ public class Gpanel extends JPanel  implements Runnable{
 
     public void setupGame(){
         aSetter.set();
+        playMusic(0);
+    }
+
+    public void playMusic(int i){
+
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(){
+        sound.stop();
+    }
+
+    public void playEffect(int i){
+        sound.setFile(i);
+        sound.play();
     }
 }
