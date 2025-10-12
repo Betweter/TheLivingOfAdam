@@ -41,6 +41,7 @@ public class TileManager {
             tiles[index] = new Tile();
             tiles[index].image = ImageIO.read(getClass().getResourceAsStream(path));
             tiles[index].image = Utility.scaledImage(tiles[index].image, gp.frameActualSize, gp.frameActualSize);
+            tiles[index].collision = collision;
         } catch (IOException e) {e.printStackTrace();}
     }
 

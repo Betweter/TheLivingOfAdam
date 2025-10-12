@@ -1,25 +1,21 @@
 package com.entity;
 import com.main.Gpanel;
 import com.main.Keys;
-import com.main.Utility;
 
 import java.awt.Graphics2D;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 
 public class Player extends Entity {
-    Gpanel gp;
     Keys keys;
 
     public final int screenX;
     public final int screenY;
 
-    public int hasKeys = 0;
+    //public int hasKeys = 0;
 
     public Player(Gpanel gp, Keys keys){
-        this.gp = gp;
+        super(gp);
         this.keys = keys;
         worldX = gp.frameActualSize*10;
         worldY = gp.frameActualSize*10;
@@ -37,27 +33,20 @@ public class Player extends Entity {
         direction = 's';
     }
 
+    @Override
     public void update(){
+        
         if ( keys.isMovePressed()){
-
-            if(keys.upPressed == true){
-                direction = 'w';
-            }
-            else if(keys.downPressed == true){
-                direction = 's';
-            }
-            else if(keys.leftPressed == true){
-                direction = 'a';
-            }
-            else if(keys.rightPressed == true){
-                direction = 'd';
-            }
-
+            setAction();
+        
             collision = false;
             gp.collisionCheck.checkTile(this);
             int objectIndex = gp.collisionCheck.checkObject(this, true);
             pickUpObject(objectIndex);
-            
+
+            int entityIndex = gp.collisionCheck.checkEntity(this, gp.npc);
+            interactNPC(entityIndex);
+                
             if (collision == false){
                 switch(direction){
                     case 'w': worldY -= speed; break;
@@ -79,6 +68,20 @@ public class Player extends Entity {
         }
     }
 
+    @Override
+    public void setAction(){
+        if(keys.upPressed == true){
+            direction = 'w';
+        } else if(keys.downPressed == true){
+            direction = 's';
+        } else if(keys.leftPressed == true){
+            direction = 'a';
+        } else if(keys.rightPressed == true){
+            direction = 'd';
+        }
+    }
+
+    @Override
     public void getImage(){
         w1 = setup("/graphics/player/w1.png");
         w2 = setup("/graphics/player/w2.png");
@@ -86,18 +89,8 @@ public class Player extends Entity {
         s2 = setup("/graphics/player/s2.png");
         d1 = setup("/graphics/player/d1.png");
         d2 = setup("/graphics/player/d2.png");
-        s1 = setup("/graphics/player/a1.png");
-        s2 = setup("/graphics/player/a2.png");
-    }
-    
-    private BufferedImage setup(String path){
-        BufferedImage scaledImage = null;
-        try{
-            scaledImage = ImageIO.read(getClass().getResourceAsStream(path));
-            scaledImage = Utility.scaledImage(scaledImage, gp.frameActualSize, gp.frameActualSize);
-        } catch (IOException e) {e.printStackTrace();}
-
-        return scaledImage;
+        a1 = setup("/graphics/player/a1.png");
+        a2 = setup("/graphics/player/a2.png");
     }
 
     public void paint(Graphics2D g2d){
@@ -140,7 +133,21 @@ public class Player extends Entity {
 
     public void pickUpObject(int i){
         if(i != 999){
-            String oName = gp.obj[i].name;
+        
+        }
+    }
+
+    public void interactNPC(int i){
+        if(i != 999){
+            System.out.println("ouch");
+        }
+    }
+}
+
+
+
+/* from pickupobject if.
+ *     String oName = gp.obj[i].name;
 
             switch(oName){
                 case "Key":
@@ -168,7 +175,4 @@ public class Player extends Entity {
                     gp.stopMusic();
                     gp.playEffect(4);
                     break;
-            }
-        }
-    }
-}
+ */

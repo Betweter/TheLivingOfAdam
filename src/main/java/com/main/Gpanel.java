@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
+import com.entity.Entity;
 import com.entity.Player;
 import com.tile.TileManager;
 import com.objects.SuperObject;
@@ -19,7 +21,7 @@ public class Gpanel extends JPanel  implements Runnable{
     public final int rows = 14;
     public final int screenWidth = frameActualSize*columns; //1344px
     public final int screenHeight = frameActualSize*rows;  //672px
-    final int fps = 60;
+    public final int fps = 60;
 
     //world
     public final int worldColumns = 50;
@@ -30,7 +32,7 @@ public class Gpanel extends JPanel  implements Runnable{
 
     //systems
     Thread gThread; //it's the clock of the game
-    Keys keys = new Keys();
+    Keys keys = new Keys(this);
     public TileManager tileManager = new TileManager(this);
     Sound music = new Sound();
     Sound sound = new Sound();
@@ -38,6 +40,11 @@ public class Gpanel extends JPanel  implements Runnable{
 
     public Player player = new Player(this, keys);
     public SuperObject obj[] = new SuperObject[10]; //to be adjusted
+    public Entity npc[] = new Entity[10];
+
+    public int gState;
+    public final int playState = 1;
+    public final int pauseState = 2;
 
     public Gpanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -77,7 +84,17 @@ public class Gpanel extends JPanel  implements Runnable{
     }
 
     public void updateData(){
-        player.update();
+        if(gState == playState){
+            player.update();
+            
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i] != null){
+                    npc[i].update();
+                }
+            }
+        } else if (gState == pauseState){
+            ;//might be needed later
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -92,6 +109,12 @@ public class Gpanel extends JPanel  implements Runnable{
                 obj[i].draw(g2d, this);
             }
         }
+        
+        for(int i=0; i<npc.length; i++){
+            if(npc[i] != null){
+                npc[i].draw(g2d);
+            }
+        }
 
         player.paint(g2d);
 
@@ -101,8 +124,10 @@ public class Gpanel extends JPanel  implements Runnable{
     }
 
     public void setupGame(){
-        aSetter.set();
+        aSetter.setObject();
+        aSetter.setNPC();
         playMusic(0);
+        gState = playState;
     }
 
     public void playMusic(int i){

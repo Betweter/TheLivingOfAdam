@@ -1,9 +1,6 @@
 package com.main;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
-
-import com.objects.OKey;
 
 import java.awt.Font;
 import java.awt.Color;
@@ -13,7 +10,7 @@ public class UserInterface {
     
     Gpanel gp;
     Font comicsans, bigsans;
-    BufferedImage keymage;
+    //BufferedImage keymage; for keymarker (unused for now)
 
     public boolean messageOn = false;
     public String message = "";
@@ -22,13 +19,14 @@ public class UserInterface {
 
     float playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
+    private Graphics2D g2d;
 
     public UserInterface(Gpanel gp){
         this.gp = gp;
         comicsans = new Font("Comic Sans MS", Font.PLAIN, 40);
         bigsans = new Font("Comic Sans MS", Font.BOLD, 70);
-        OKey key = new OKey(gp);
-        keymage = key.image;
+        //OKey key = new OKey(gp); 
+        //keymage = key.image;
     }
 
     public void showMessage(String text){
@@ -37,6 +35,37 @@ public class UserInterface {
         messageOn = true;
     }
 
+    public void draw(Graphics2D g2d){
+        
+        this.g2d = g2d;
+        g2d.setFont(comicsans);
+        g2d.setColor(Color.white);
+
+        if(gp.gState == gp.playState){
+            //todo
+        } else if (gp.gState == gp.pauseState){
+            g2d.setFont(bigsans);
+            drawPauseScreen();
+            g2d.setFont(comicsans);
+        }
+    }
+
+    public void drawPauseScreen(){
+
+        String text = "PAUSE";
+        g2d.drawString(text, getTxtCenter(text), gp.screenHeight/2 );
+    }
+
+    public int getTxtCenter(String text){
+
+        int length = (int)g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        return (gp.screenWidth - length )/2;
+    }
+
+}
+
+
+/*  Draw for old markers - currently unused
     public void draw(Graphics2D g2d){
         if(!gameFinished){
             g2d.setFont(comicsans);
@@ -56,7 +85,6 @@ public class UserInterface {
             }
 
             playTime += (float) 1/60;
-            System.out.println(playTime);
             g2d.drawString("time: " + dFormat.format(playTime), gp.screenWidth - gp.frameActualSize*5, gp.frameActualSize);
 
         } else {
@@ -86,6 +114,4 @@ public class UserInterface {
             
             gp.gThread = null;
         }
-    }
-
-}
+    } */

@@ -6,6 +6,11 @@ import java.awt.event.KeyEvent;
 public class Keys implements KeyListener{
     
     public boolean upPressed, downPressed, leftPressed, rightPressed;
+    private Gpanel gp;
+
+    public Keys(Gpanel gp){
+        this.gp = gp;
+    }
 
     @Override
     public void keyTyped(KeyEvent e){
@@ -29,7 +34,13 @@ public class Keys implements KeyListener{
         if (code == KeyEvent.VK_D){
             rightPressed = true;
         }
-
+        if (code == KeyEvent.VK_ESCAPE){
+            if(gp.gState == gp.playState){
+                gp.gState = gp.pauseState;
+            } else if(gp.gState == gp.pauseState){ 
+                gp.gState = gp.playState;
+            }
+        }
 
     }
 
