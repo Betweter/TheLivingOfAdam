@@ -10,6 +10,7 @@ public class N_Dorothy extends Entity {
 
         super(gp);
         getImage();
+        setDialogue();
     }
 
     @Override
@@ -43,5 +44,17 @@ public class N_Dorothy extends Entity {
             frameCounter = 0;
         }
         
+    }
+
+    public void setDialogue(){
+        dialogues[0] = "AAAAAAAAAaaaaaaaaaaa\naAAAaAAAaAaAaA!";
+        dialogues[1] = "Adam we'll be late!";
+        dialogues[2] = "AAAAAAAAAaaaaaaaaaaaaAAAaAAAaAaAaA!";
+        dialogues[3] = "AAAAAAAAAaaaaaaaaaaaaAAAaAAAaAaAaA!";
+    }
+
+    @Override
+    public void speak(){
+        super.speak();//todo
     }
 }

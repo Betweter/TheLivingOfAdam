@@ -25,6 +25,9 @@ public abstract class Entity {
     public int collisionAreaXDefault, collisionAreaYDefault;
     public boolean collision = false;
     public int frameCounter = 0;
+    
+    String dialogues[] = new String[20];
+    int dialogueIndex = 0;
 
     public Entity(Gpanel gp){
         this.gp = gp;
@@ -113,4 +116,20 @@ public abstract class Entity {
             spriteCounter = 0;
         }       
     }
+
+    public void speak(){
+                if(dialogues[dialogueIndex] == null){
+            dialogueIndex = 0;
+        }
+
+        gp.ui.currentDialogue = dialogues[dialogueIndex];
+        dialogueIndex++;
+
+        switch(gp.player.direction){
+            case 'w': direction = 's'; break;
+            case 'd': direction = 'a'; break;
+            case 's': direction = 'w'; break;
+            case 'a': direction = 'd'; break;
+        }
+}
 }   

@@ -32,7 +32,7 @@ public class Gpanel extends JPanel  implements Runnable{
 
     //systems
     Thread gThread; //it's the clock of the game
-    Keys keys = new Keys(this);
+    public Keys keys = new Keys(this);
     public TileManager tileManager = new TileManager(this);
     Sound music = new Sound();
     Sound sound = new Sound();
@@ -43,8 +43,10 @@ public class Gpanel extends JPanel  implements Runnable{
     public Entity npc[] = new Entity[10];
 
     public int gState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
 
     public Gpanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -102,32 +104,35 @@ public class Gpanel extends JPanel  implements Runnable{
 
         Graphics2D g2d = (Graphics2D) g;
         
-        tileManager.draw(g2d);
+        if(gState == titleState){
+            ui.draw(g2d);
+        }else{
+            tileManager.draw(g2d);
 
-        for(int i=0; i<obj.length; i++){
-            if(obj[i] != null){
-                obj[i].draw(g2d, this);
+            for(int i=0; i<obj.length; i++){
+                if(obj[i] != null){
+                    obj[i].draw(g2d, this);
+                }
             }
-        }
-        
-        for(int i=0; i<npc.length; i++){
-            if(npc[i] != null){
-                npc[i].draw(g2d);
+            
+            for(int i=0; i<npc.length; i++){
+                if(npc[i] != null){
+                    npc[i].draw(g2d);
+                }
             }
+
+            player.paint(g2d);
+
+            ui.draw(g2d);
         }
-
-        player.paint(g2d);
-
-        ui.draw(g2d);
-
         g2d.dispose();
     }
 
     public void setupGame(){
         aSetter.setObject();
         aSetter.setNPC();
-        playMusic(0);
-        gState = playState;
+        //playMusic(0);
+        gState = titleState;
     }
 
     public void playMusic(int i){

@@ -1,30 +1,46 @@
 package com.main;
 import java.awt.Graphics2D;
-import java.text.DecimalFormat;
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.BasicStroke;
 import java.awt.Color;
 
 
 public class UserInterface {
     
     Gpanel gp;
-    Font comicsans, bigsans;
+    Font comicsans, bigsans, maruMonica;
     //BufferedImage keymage; for keymarker (unused for now)
 
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
+    public String currentDialogue;
+    public int commandNr = 0;
+    public int maxCommandNr = 3;
+    public int titleScreenDefState = 0;
+    public int titleScreenState = titleScreenDefState;
+    public int manualState = 1;
+    public int prologueState = 2;
 
-    float playTime;
-    DecimalFormat dFormat = new DecimalFormat("#0.00");
+
+    //float playTime;
+    //DecimalFormat dFormat = new DecimalFormat("#0.00");
     private Graphics2D g2d;
 
     public UserInterface(Gpanel gp){
         this.gp = gp;
         comicsans = new Font("Comic Sans MS", Font.PLAIN, 40);
         bigsans = new Font("Comic Sans MS", Font.BOLD, 70);
+
+        try{
+            InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
+            maruMonica = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(Font.PLAIN, 40f);
+        } catch (FontFormatException e){ e.printStackTrace();
+        } catch (IOException e) { e.printStackTrace();}
         //OKey key = new OKey(gp); 
         //keymage = key.image;
     }
@@ -38,7 +54,7 @@ public class UserInterface {
     public void draw(Graphics2D g2d){
         
         this.g2d = g2d;
-        g2d.setFont(comicsans);
+        g2d.setFont(maruMonica);
         g2d.setColor(Color.white);
 
         if(gp.gState == gp.playState){
@@ -47,7 +63,113 @@ public class UserInterface {
             g2d.setFont(bigsans);
             drawPauseScreen();
             g2d.setFont(comicsans);
+        } else if (gp.gState == gp.dialogueState){
+            drawDialogue();
+        } else if (gp.gState == gp.titleState){
+            drawTitleScreen();
         }
+    }
+
+    private void drawTitleScreen() {
+        
+        if(titleScreenState == titleScreenDefState){
+            drawTitle();
+
+            g2d.drawImage(gp.player.s1, gp.screenWidth/2 - gp.frameActualSize*2, gp.frameActualSize*5,
+                gp.frameActualSize*4, gp.frameActualSize*4, null );
+
+            g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 48F));
+            String text = " Play";//for some reason space helps to even everything out
+            g2d.drawString(text, getTxtCenter(text), gp.frameActualSize*10);
+            if(commandNr == 0){
+                g2d.drawString(">", getTxtCenter(text)-gp.frameActualSize/4, gp.frameActualSize*10);
+            }        
+            
+            text = "Prologue";
+            g2d.drawString(text, getTxtCenter(text), gp.frameActualSize*11);
+            if(commandNr == 1){
+                g2d.drawString(">", getTxtCenter(text)-gp.frameActualSize/2, gp.frameActualSize*11);
+            } 
+
+            text = "Manual";
+            g2d.drawString(text, getTxtCenter(text), gp.frameActualSize*12);
+            if(commandNr == 2){
+                g2d.drawString(">", getTxtCenter(text)-gp.frameActualSize/2, gp.frameActualSize*12);
+            } 
+
+            text = "Quit";
+            g2d.drawString(text, getTxtCenter(text), gp.frameActualSize*13);
+            if(commandNr == 3){
+                g2d.drawString(">", getTxtCenter(text)-gp.frameActualSize/2, gp.frameActualSize*13);
+            } 
+        } else if(titleScreenState == manualState){
+            drawManualScreen();
+        } else if(titleScreenState == prologueState){
+            drawPrologueScreen();
+        }
+    }
+
+    private void drawPrologueScreen() {
+        drawTitle();
+        String text = "Long ago, in a distant land,\n Adam - the (arguably) first man felt hunger.";
+        drawText(text);
+    }
+
+     private void drawManualScreen() {
+        drawTitle();
+        String text = "Use WASD to walk,\n Enter to interact,\nEscape for pause.\nPress Enter to come back to title screen.";
+        drawText(text);
+    }
+
+    private void drawDialogue() {
+        
+        int x = gp.frameActualSize *2;
+        int y = gp.frameActualSize /2;
+        int width = gp.screenWidth - gp.frameActualSize*4;
+        int height = gp.frameActualSize *5;
+        drawSubWindow(x, y, width, height);
+
+        x+= gp.frameActualSize;
+        y+= gp.frameActualSize;
+
+        for(String line : currentDialogue.split("\n")){
+            g2d.drawString(line, x, y);
+            y+= height/5;
+        }        
+    }
+
+    private void drawTitle(){
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "The living of Adam";
+
+        g2d.setColor(new Color(255,255,255,100));
+        g2d.drawString(text, getTxtCenter(text)+5, gp.frameActualSize*3+5);
+        g2d.setColor(Color.white);
+        g2d.drawString(text, getTxtCenter(text), gp.frameActualSize*3);
+    }
+
+    private void drawText(String text){
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 48F));
+        
+        int y = gp.frameActualSize*5;
+        for(String line : text.split("\n")){
+            g2d.drawString(line, getTxtCenter(line), y);
+            y+= gp.frameActualSize;
+        } 
+    }
+    
+    public void drawSubWindow(int x, int y, int width, int height){
+
+        Color c = new Color(0,0,0, 190);
+        g2d.setColor(c);
+        int arc = 35;
+        g2d.fillRoundRect(x, y, width, height, arc, arc);
+
+        c = new Color(255,255,255);
+        g2d.setColor(c);
+        int z = 4;
+        g2d.setStroke(new BasicStroke(z));
+        g2d.drawRoundRect(x+z, y+z, width-2*z, height-2*z, arc-z, arc-z);
     }
 
     public void drawPauseScreen(){
