@@ -37,6 +37,7 @@ public class Gpanel extends JPanel  implements Runnable{
     Sound music = new Sound();
     Sound sound = new Sound();
     public UserInterface ui = new UserInterface(this);
+    public Events events = new Events(this);
 
     public Player player = new Player(this, keys);
     public SuperObject obj[] = new SuperObject[10]; //to be adjusted

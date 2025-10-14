@@ -1,7 +1,11 @@
 package com.main;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.objects.*;
+
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.BasicStroke;
@@ -30,6 +34,7 @@ public class UserInterface {
     //float playTime;
     //DecimalFormat dFormat = new DecimalFormat("#0.00");
     private Graphics2D g2d;
+    BufferedImage heart_full, heart_half, heart_empty;
 
     public UserInterface(Gpanel gp){
         this.gp = gp;
@@ -43,6 +48,11 @@ public class UserInterface {
         } catch (IOException e) { e.printStackTrace();}
         //OKey key = new OKey(gp); 
         //keymage = key.image;
+
+        OHeart heart = new OHeart(gp);
+        heart_full = heart.image;
+        heart_half = heart.image2;
+        heart_empty = heart.image3;
     }
 
     public void showMessage(String text){
@@ -58,16 +68,41 @@ public class UserInterface {
         g2d.setColor(Color.white);
 
         if(gp.gState == gp.playState){
-            //todo
+            drawPlayerLife();
         } else if (gp.gState == gp.pauseState){
             g2d.setFont(bigsans);
             drawPauseScreen();
+            drawPlayerLife();
             g2d.setFont(comicsans);
         } else if (gp.gState == gp.dialogueState){
             drawDialogue();
+            drawPlayerLife();
         } else if (gp.gState == gp.titleState){
             drawTitleScreen();
         }
+    }
+
+    private void drawPlayerLife() {
+        
+        int x = gp.frameActualSize /2;
+        int y = gp.frameActualSize /2;
+
+		int fullHearts = gp.player.life/2;
+		int halfHearts = gp.player.life%2;
+        int emptyHearts = (gp.player.maxLife - gp.player.life)/2;
+		
+		for(int i = 0; i < fullHearts; i++) {
+			g2d.drawImage(heart_full, x, y, null);
+			x += gp.frameActualSize;
+		}
+		for(int i = 0; i < halfHearts; i++) {
+			g2d.drawImage(heart_half, x, y, null);
+			x += gp.frameActualSize;
+		}
+        for(int i = 0; i < emptyHearts; i++) {
+			g2d.drawImage(heart_empty, x, y, null);
+			x += gp.frameActualSize;
+		}
     }
 
     private void drawTitleScreen() {

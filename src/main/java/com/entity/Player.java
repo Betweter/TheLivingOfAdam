@@ -31,6 +31,9 @@ public class Player extends Entity {
 
         getImage();
         direction = 's';
+
+        maxLife = 6;
+        life = maxLife;
     }
 
     @Override
@@ -46,6 +49,10 @@ public class Player extends Entity {
 
             int entityIndex = gp.collisionCheck.checkEntity(this, gp.npc);
             interactNPC(entityIndex);
+
+            gp.events.eCheck();
+
+            gp.keys.enterPressed = false;
                 
             if (collision == false){
                 switch(direction){
@@ -144,7 +151,6 @@ public class Player extends Entity {
                 gp.npc[i].speak();
             }
         }
-        gp.keys.enterPressed = false;
     }
 }
 

@@ -29,6 +29,9 @@ public abstract class Entity {
     String dialogues[] = new String[20];
     int dialogueIndex = 0;
 
+    public int maxLife;
+    public int life;
+
     public Entity(Gpanel gp){
         this.gp = gp;
         collisionArea = new Rectangle(0,0, gp.frameActualSize-1, gp.frameActualSize-1);
