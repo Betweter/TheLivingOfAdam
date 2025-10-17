@@ -16,7 +16,7 @@ public class UserInterface {
     
     Gpanel gp;
     Font comicsans, bigsans, maruMonica;
-    //BufferedImage keymage; for keymarker (unused for now)
+    BufferedImage keymage;
 
     public boolean messageOn = false;
     public String message = "";
@@ -31,8 +31,6 @@ public class UserInterface {
     public int prologueState = 2;
 
 
-    //float playTime;
-    //DecimalFormat dFormat = new DecimalFormat("#0.00");
     private Graphics2D g2d;
     BufferedImage heart_full, heart_half, heart_empty;
 
@@ -46,8 +44,8 @@ public class UserInterface {
             maruMonica = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(Font.PLAIN, 40f);
         } catch (FontFormatException e){ e.printStackTrace();
         } catch (IOException e) { e.printStackTrace();}
-        //OKey key = new OKey(gp); 
-        //keymage = key.image;
+        OKey key = new OKey(gp); 
+        keymage = key.image;
 
         OHeart heart = new OHeart(gp);
         heart_full = heart.image;
@@ -69,6 +67,7 @@ public class UserInterface {
 
         if(gp.gState == gp.playState){
             drawPlayerLife();
+            drawMarkers();
         } else if (gp.gState == gp.pauseState){
             g2d.setFont(bigsans);
             drawPauseScreen();
@@ -80,6 +79,54 @@ public class UserInterface {
         } else if (gp.gState == gp.titleState){
             drawTitleScreen();
         }
+        if (gameFinished){
+            drawFinish();
+        }
+    }
+
+    private void drawMarkers() {
+        g2d.setFont(comicsans);
+        g2d.setColor(Color.white);
+
+        g2d.drawImage(keymage, 37 , 75, gp.frameActualSize, gp.frameActualSize, null);
+        g2d.drawString("x " + gp.player.hasKeys,92,115);
+
+        if(messageOn){
+            g2d.drawString(message, gp.frameActualSize/2, gp.frameActualSize*5);
+            messageCounter++;
+
+            if(messageCounter >= 60*2){
+                messageCounter = 0;
+                messageOn = false;
+            }
+        }
+    }
+
+    private void drawFinish() {
+        g2d.setFont(comicsans);
+        g2d.setColor(Color.white);
+
+        String text = "You've found the treasure";
+        int textLength = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        int x = gp.screenWidth/2 - textLength/2;
+        int y = gp.screenHeight/2 + gp.frameActualSize*2;
+        g2d.drawString(text, x, y);
+
+        textLength = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        x = gp.screenWidth/2 - textLength/2;
+        y = gp.screenHeight/2 + gp.frameActualSize*5;
+        g2d.drawString(text, x, y);
+
+        g2d.setFont(bigsans);
+        g2d.setColor(Color.magenta);
+
+        text = "YUPI";
+        textLength = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        x = gp.screenWidth/2 - textLength/2;
+        y = gp.screenHeight/2 + gp.frameActualSize*4;
+        g2d.drawString(text, x, y);
+            
+        gp.gThread = null;
     }
 
     private void drawPlayerLife() {
@@ -220,55 +267,3 @@ public class UserInterface {
     }
 
 }
-
-
-/*  Draw for old markers - currently unused
-    public void draw(Graphics2D g2d){
-        if(!gameFinished){
-            g2d.setFont(comicsans);
-            g2d.setColor(Color.white);
-
-            g2d.drawImage(keymage, gp.frameActualSize/3, gp.frameActualSize/101, gp.frameActualSize, gp.frameActualSize, null);
-            g2d.drawString("x " + gp.player.hasKeys,75,40);
-
-            if(messageOn){
-                g2d.drawString(message, gp.frameActualSize/2, gp.frameActualSize*5);
-                messageCounter++;
-
-                if(messageCounter >= 60*2){
-                    messageCounter = 0;
-                    messageOn = false;
-                }
-            }
-
-            playTime += (float) 1/60;
-            g2d.drawString("time: " + dFormat.format(playTime), gp.screenWidth - gp.frameActualSize*5, gp.frameActualSize);
-
-        } else {
-            g2d.setFont(comicsans);
-            g2d.setColor(Color.white);
-
-            String text = "You've found the treasure";
-            int textLength = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
-            int x = gp.screenWidth/2 - textLength/2;
-            int y = gp.screenHeight/2 + gp.frameActualSize*2;
-            g2d.drawString(text, x, y);
-
-            text = "It took you: " + dFormat.format(playTime) + " seconds";
-            textLength = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
-            x = gp.screenWidth/2 - textLength/2;
-            y = gp.screenHeight/2 + gp.frameActualSize*5;
-            g2d.drawString(text, x, y);
-
-            g2d.setFont(bigsans);
-            g2d.setColor(Color.magenta);
-
-            text = "YUPI";
-            textLength = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
-            x = gp.screenWidth/2 - textLength/2;
-            y = gp.screenHeight/2 + gp.frameActualSize*4;
-            g2d.drawString(text, x, y);
-            
-            gp.gThread = null;
-        }
-    } */

@@ -11,10 +11,10 @@ public class AssetSetter {
     }
 
     public void setObject(){
-        gp.obj[0] = new OKey(gp);
-        gp.obj[0].worldX = gp.frameActualSize*23;
-        gp.obj[0].worldY = gp.frameActualSize*22;
-
+        gp.obj[0] = new OKey(gp, 22, 23);
+        gp.obj[1] = new ODoor(gp, 21, 10);
+        gp.obj[2] = new OChest(gp, 40, 40);
+        gp.obj[3] = new OBoots(gp, 5, 20);
     }
 
     public void setNPC(){
@@ -25,9 +25,3 @@ public class AssetSetter {
     }
     
 }
-
-/* from "chest hunting"
-       gp.obj[0] = new OKey(gp);
-        gp.obj[0].worldX = gp.frameActualSize*23;
-        gp.obj[0].worldY = gp.frameActualSize*22;
- */

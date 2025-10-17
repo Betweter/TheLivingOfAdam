@@ -72,19 +72,19 @@ public class Collision {
                 switch(entity.direction){
                     case 'w':
                         entity.collisionArea.y -= entity.speed;
-                        resultObjectCollision(entity, i, index, player);
+                        index = resultObjectCollision(entity, i, index, player);
                         break;
                     case 's':
                         entity.collisionArea.y += entity.speed;
-                        resultObjectCollision(entity, i, index, player);
+                        index = resultObjectCollision(entity, i, index, player);
                         break;
                     case 'a':
                         entity.collisionArea.x -= entity.speed;
-                        resultObjectCollision(entity, i, index, player);
+                        index = resultObjectCollision(entity, i, index, player);
                         break;
                     case 'd':
                         entity.collisionArea.x += entity.speed;
-                        resultObjectCollision(entity, i, index, player);
+                        index = resultObjectCollision(entity, i, index, player);
                 }
 
                 entity.collisionArea.x = entity.collisionAreaXDefault;
@@ -96,7 +96,7 @@ public class Collision {
         return index;
     }
     
-    public void resultObjectCollision(Entity entity, int i, int index, boolean player){
+    public int resultObjectCollision(Entity entity, int i, int index, boolean player){
         if(entity.collisionArea.intersects(gp.obj[i].collisionArea)){
              if(gp.obj[i].collision){
                 entity.collision = true;
@@ -105,6 +105,7 @@ public class Collision {
                 index = i;
             }
         }
+        return index;
     }
 
     public int resultEntityCollision(Entity entity, Entity[] target, int i, int def){
@@ -187,6 +188,7 @@ public class Collision {
             gp.player.collisionArea.y = gp.player.collisionAreaYDefault;
         }
     }
+
     public void resultPlayerCollision(Entity entity){
         if(entity.collisionArea.intersects(gp.player.collisionArea)){
             entity.collision = true;

@@ -12,7 +12,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    //public int hasKeys = 0;
+    public int hasKeys = 0;
 
     public Player(Gpanel gp, Keys keys){
         super(gp);
@@ -138,26 +138,9 @@ public class Player extends Entity {
     }
 
     public void pickUpObject(int i){
+
         if(i != 999){
-        
-        }
-    }
-
-    public void interactNPC(int i){
-        if(i != 999){
-            if(gp.keys.enterPressed){
-                gp.gState = gp.dialogueState;
-                gp.npc[i].speak();
-            }
-        }
-    }
-}
-
-
-
-/* from pickupobject if.
- *     String oName = gp.obj[i].name;
-
+            String oName = gp.obj[i].name;
             switch(oName){
                 case "Key":
                     hasKeys++;
@@ -184,4 +167,16 @@ public class Player extends Entity {
                     gp.stopMusic();
                     gp.playEffect(4);
                     break;
- */
+            }
+        }
+    }
+
+    public void interactNPC(int i){
+        if(i != 999){
+            if(gp.keys.enterPressed){
+                gp.gState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
+        }
+    }
+}

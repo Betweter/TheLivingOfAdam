@@ -15,4 +15,15 @@ public class OKey extends SuperObject {
             Utility.scaledImage(image, gp.frameActualSize, gp.frameActualSize);
         } catch (IOException e) { e.printStackTrace();}
     }
+
+    public OKey(Gpanel gp, int worldX, int worldY){
+        name = "Key";
+        this.worldX = worldX * gp.frameActualSize;
+        this.worldY = worldY * gp.frameActualSize;
+
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream("/graphics/objects/giraffekey.png"));
+            Utility.scaledImage(image, gp.frameActualSize, gp.frameActualSize);
+        } catch (IOException e) { e.printStackTrace();}
+    }
 }

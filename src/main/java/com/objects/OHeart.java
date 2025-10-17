@@ -26,4 +26,15 @@ public class OHeart extends SuperObject{
             image3 = Utility.scaledImage(image3, gp.frameActualSize, gp.frameActualSize);
         } catch (IOException e) { e.printStackTrace();}
     }
+
+    public OHeart(Gpanel gp, int worldX, int worldY){
+        name = "Heart";
+        this.worldX = worldX * gp.frameActualSize;
+        this.worldY = worldY * gp.frameActualSize;
+
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream("/graphics/objects/heart_full.png"));
+            Utility.scaledImage(image, gp.frameActualSize, gp.frameActualSize);
+        } catch (IOException e) { e.printStackTrace();}
+    }
 }

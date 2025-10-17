@@ -10,7 +10,7 @@ public abstract class SuperObject {
     public String name;
     public boolean collision = false;
     public int worldX, worldY;
-    public Rectangle collisionArea = new Rectangle(0,0, 48, 48); //frame size, to be generalized
+    public Rectangle collisionArea = new Rectangle(0,0, 48, 48);; //frame size, to be generalized
     public int collisionAreaXDefault = 0;
     public int collisonAreaYDefault = 0;
 
