@@ -64,8 +64,8 @@ public class Events {
     private void teleport(int gState, int x, int y){
         gp.gState = gState;
         gp.ui.currentDialogue = "teleportation";
-        gp.player.worldX = x;
-        gp.player.worldY = y;
+        gp.player.worldX = x*gp.frameActualSize;
+        gp.player.worldY = y*gp.frameActualSize;
     }
 
 }

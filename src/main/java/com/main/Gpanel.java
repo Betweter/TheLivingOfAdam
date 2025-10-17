@@ -78,7 +78,9 @@ public class Gpanel extends JPanel  implements Runnable{
                 if(tLeft < 0){
                     tLeft = 0;
                 }
-                Thread.sleep(tNext - System.currentTimeMillis());
+                if(tNext - System.currentTimeMillis() > 0){
+                    Thread.sleep(tNext - System.currentTimeMillis());
+                }
             } catch (InterruptedException e){ 
                 e.printStackTrace();
             }

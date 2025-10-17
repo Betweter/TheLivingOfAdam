@@ -39,7 +39,7 @@ public class Player extends Entity {
     @Override
     public void update(){
         
-        if ( keys.isMovePressed()){
+        if ( keys.isMovePressed() || keys.enterPressed){
             setAction();
         
             collision = false;
@@ -51,10 +51,8 @@ public class Player extends Entity {
             interactNPC(entityIndex);
 
             gp.events.eCheck();
-
-            gp.keys.enterPressed = false;
                 
-            if (collision == false){
+            if (collision == false && !keys.enterPressed){
                 switch(direction){
                     case 'w': worldY -= speed; break;
                     case 's': worldY += speed; break;
@@ -62,6 +60,7 @@ public class Player extends Entity {
                     case 'd': worldX += speed; break;
                 }
             }
+            gp.keys.enterPressed = false;
 
             spriteCounter++;
             if(spriteCounter > 13){
