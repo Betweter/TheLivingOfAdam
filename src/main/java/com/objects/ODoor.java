@@ -8,15 +8,6 @@ import com.main.Gpanel;
 import com.main.Utility;
 
 public class ODoor extends SuperObject {
-        
-    public ODoor(Gpanel gp){
-        name = "Door";
-
-        try{
-            image = ImageIO.read(getClass().getResourceAsStream("/graphics/objects/door1.png"));
-        } catch (IOException e) { e.printStackTrace();}
-        collision = true;
-    }
 
     public ODoor(Gpanel gp, int worldX, int worldY){
         name = "Door";

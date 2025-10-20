@@ -12,7 +12,7 @@ public class OHeart extends SuperObject{
     Gpanel gp;
     public BufferedImage image2, image3;
     
-    public OHeart(Gpanel gp){
+    public OHeart(Gpanel gp){ //for UI
        
         this.gp = gp;
         name = "Heart";
@@ -27,7 +27,7 @@ public class OHeart extends SuperObject{
         } catch (IOException e) { e.printStackTrace();}
     }
 
-    public OHeart(Gpanel gp, int worldX, int worldY){
+    public OHeart(Gpanel gp, int worldX, int worldY){//for adding it maybe later on the map to heal
         name = "Heart";
         this.worldX = worldX * gp.frameActualSize;
         this.worldY = worldY * gp.frameActualSize;

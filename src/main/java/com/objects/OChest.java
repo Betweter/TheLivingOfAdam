@@ -7,15 +7,6 @@ import com.main.Gpanel;
 import com.main.Utility;
 
 public class OChest extends SuperObject {
-        
-    public OChest(Gpanel gp){
-        name = "Chest";
-
-        try{
-            image = ImageIO.read(getClass().getResourceAsStream("/graphics/objects/chest1.png"));
-        } catch (IOException e) { e.printStackTrace();}
-        collision = true;
-    }
     
     public OChest(Gpanel gp, int worldX, int worldY){
         name = "Chest";

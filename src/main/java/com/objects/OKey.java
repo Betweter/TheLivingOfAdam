@@ -7,7 +7,7 @@ import com.main.Utility;
 
 public class OKey extends SuperObject {
     
-    public OKey(Gpanel gp){
+    public OKey(Gpanel gp){ //for UI
         name = "Key";
 
         try{
@@ -16,7 +16,7 @@ public class OKey extends SuperObject {
         } catch (IOException e) { e.printStackTrace();}
     }
 
-    public OKey(Gpanel gp, int worldX, int worldY){
+    public OKey(Gpanel gp, int worldX, int worldY){ //for placing it on map
         name = "Key";
         this.worldX = worldX * gp.frameActualSize;
         this.worldY = worldY * gp.frameActualSize;
