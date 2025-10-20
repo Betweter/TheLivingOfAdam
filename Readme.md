@@ -22,3 +22,7 @@ After building, run the generated JAR file:
 ## How to play
 
 Use WASD for navigation, Enter for confirmation/interaction. Escape for pause.
+NPC's have a few sentences to say, then they loop.
+Sand tiles indicates something is programmed onto them.
+There's a special item on a map which can help in succeding faster.
+The goal is to open the chest.
