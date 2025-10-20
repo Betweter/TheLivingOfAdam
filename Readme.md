@@ -9,7 +9,7 @@
 
 From the project root (where `pom.xml` is located), run:
 
-mvn clean install
+`mvn clean install`
 
 This command compiles the source code, runs tests, and packages the application into a JAR file (typically located in `target/`).
 
@@ -17,7 +17,7 @@ This command compiles the source code, runs tests, and packages the application 
 
 After building, run the generated JAR file:
 
-java -jar target/TheLivingOfAdam.jar
+`java -jar target/TheLivingOfAdam.jar`
 
 ## How to play
 
