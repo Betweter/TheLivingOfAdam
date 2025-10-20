@@ -11,17 +11,17 @@ public class AssetSetter {
     }
 
     public void setObject(){
-        gp.obj[0] = new OKey(gp, 22, 23);
-        gp.obj[1] = new ODoor(gp, 21, 10);
-        gp.obj[2] = new OChest(gp, 40, 40);
-        gp.obj[3] = new OBoots(gp, 5, 20);
+        gp.obj[0] = new OKey(gp, 48, 48);
+        gp.obj[1] = new ODoor(gp, 27,8);
+        gp.obj[2] = new OChest(gp, 28, 8);
+        gp.obj[3] = new OBoots(gp, 48, 18);
     }
 
     public void setNPC(){
         
-        gp.npc[0] = new N_Dorothy(gp);
-        gp.npc[0].worldX = gp.frameActualSize * 15;
-        gp.npc[0].worldY = gp.frameActualSize * 15;
+        gp.npc[0] = new N_Dorothy(gp, 15, 18);
+        gp.npc[1] = new N_Crow(gp, 5, 5);
+        gp.npc[2] = new N_Crow(gp, 45, 48);
     }
     
 }

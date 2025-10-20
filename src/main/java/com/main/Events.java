@@ -19,9 +19,11 @@ public class Events {
 
     public void eCheck(){
 
-        if(hit(2, 2, anyDirection)){ damagePit(gp.dialogueState); }
-        if(hit(4, 2, anyDirection)){ healingPit(gp.dialogueState); }
-        if(hit(6, 2, anyDirection)){ teleport(gp.dialogueState, 10, 10); }
+        if(hit(6, 1, anyDirection)){ damagePit(gp.dialogueState); }
+        if(hit(8, 5, anyDirection)){ healingPit(gp.dialogueState); }
+        if(hit(13, 4, anyDirection)){ teleport(gp.dialogueState, 10, 10); }
+        if(hit(47, 49, anyDirection)){ teleport(gp.dialogueState, 10, 10); }
+        if(hit(47, 48, anyDirection)){ teleport(gp.dialogueState, 10, 10); }
     }
 
     public boolean hit(int eCol, int eRow, char reqDirection){

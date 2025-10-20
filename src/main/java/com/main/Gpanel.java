@@ -97,8 +97,9 @@ public class Gpanel extends JPanel  implements Runnable{
                     npc[i].update();
                 }
             }
-        } else if (gState == pauseState){
-            ;//might be needed later
+        }
+        if (player.life == 0){
+            System.exit(0);
         }
     }
 

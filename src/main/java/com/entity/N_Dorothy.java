@@ -6,9 +6,9 @@ import com.main.Gpanel;
 
 public class N_Dorothy extends Entity {
     
-    public N_Dorothy(Gpanel gp){
+    public N_Dorothy(Gpanel gp, int worldX, int worldY){
 
-        super(gp);
+        super(gp, worldX, worldY);
         getImage();
         setDialogue();
     }
@@ -55,6 +55,6 @@ public class N_Dorothy extends Entity {
 
     @Override
     public void speak(){
-        super.speak();//todo
+        super.speak();
     }
 }

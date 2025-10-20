@@ -36,6 +36,14 @@ public abstract class Entity {
         this.gp = gp;
         collisionArea = new Rectangle(0,0, gp.frameActualSize-1, gp.frameActualSize-1);
     }
+
+    public Entity(Gpanel gp, int worldX, int worldY){
+        this.gp = gp;
+        collisionArea = new Rectangle(0,0, gp.frameActualSize-1, gp.frameActualSize-1);
+
+        this.worldX = worldX * gp.frameActualSize;
+        this.worldY = worldY * gp.frameActualSize;
+    }
     
     public abstract void getImage();
 

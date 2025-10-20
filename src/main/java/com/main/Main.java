@@ -6,7 +6,7 @@ public class Main{
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Average Zelda clone");
+        window.setTitle("The living of Adam");
 
         Gpanel gpanel = new Gpanel();
         window.add(gpanel);
