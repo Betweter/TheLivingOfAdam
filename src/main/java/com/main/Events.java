@@ -12,7 +12,7 @@ public class Events {
     public Events(Gpanel gp){
 
         this.gp = gp;
-        eRect = new Rectangle(23, 23, 2, 2);
+        eRect = new Rectangle(gp.frameActualSize/4, gp.frameActualSize/4, gp.frameActualSize/2, gp.frameActualSize/2);
         eRectDefX = eRect.x;
         eRectDefY = eRect.y;
     }
